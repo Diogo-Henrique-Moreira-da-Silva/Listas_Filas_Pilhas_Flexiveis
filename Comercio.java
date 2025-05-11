@@ -59,7 +59,8 @@ public class Comercio {
         System.out.println("6 - Calular valor medio pedido");
         System.out.println("7 - Filtrar os primeiros pedidos com valor total acima de um determinado valor");
         System.out.println("8 - Exibir o valor total médio dos N primeiros pedidos");
-        System.out.println("8 - Exibir os primeiros pedidos que apresentam um determinado produto");
+        System.out.println("9 - Exibir os primeiros pedidos que apresentam um determinado produto");
+        System.out.println("10 - Gerar produtos recentes comprados");
         System.out.println("0 - Sair");
         System.out.print("Digite sua opção: ");
         return Integer.parseInt(teclado.nextLine());
@@ -227,7 +228,7 @@ public class Comercio {
         if(pedido != null) {
             pedidosCadastrados.enfileirar(pedido);
             quantPedidos++;
-            pedidosCadastradosPermanente.inserir(pedido, quantPedidos);
+            pedidosCadastradosPermanente.inserirNoFim(pedido);
         } else {
             System.out.println("Pedido vazio.");
         }
@@ -287,13 +288,21 @@ public class Comercio {
     }
 
     public static void filtroPorProduto() {
-    System.out.print("Digite o nome do produto para filtrar pedidos: ");
-    String filtro = teclado.nextLine();
-    Lista<Pedido> filtrados = pedidosCadastradosPermanente.filtrar(
-        pedido -> pedido.contemProdutoComNome(filtro),3);
+        System.out.print("Digite o nome do produto para filtrar pedidos: ");
+        String filtro = teclado.nextLine();
+        Lista<Pedido> filtrados = pedidosCadastradosPermanente.filtrar(
+            pedido -> pedido.contemProdutoComNome(filtro),3);
 
-    System.out.println(filtrados.toString());
-}
+        System.out.println(filtrados.toString());
+    }
+
+    public static void produtosCompradosRecente(){
+        Pedido ultimo = pedidosCadastradosPermanente.getUltimo();
+        Pilha<String> recentes = ultimo.empilharProdutosRecentes();
+        recentes.imprimir();
+
+    }
+
 
     public static void main(String[] args) {
 		
@@ -318,6 +327,7 @@ public class Comercio {
                 case 7 -> filtrar();
                 case 8 -> valorMedioInterativo();
                 case 9 -> filtroPorProduto();
+                case 10 -> produtosCompradosRecente();
 
             }
             pausa();
