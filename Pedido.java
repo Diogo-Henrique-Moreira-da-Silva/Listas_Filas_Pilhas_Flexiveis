@@ -94,7 +94,7 @@ public class Pedido {
     }
 
     return soma / quantProdutos;
-}
+	}
 
 	public boolean contemProdutoComNome(String nome) {
     for (int i = 0; i < quantProdutos; i++) {
@@ -103,7 +103,16 @@ public class Pedido {
         }
     }
     return false;
-}
+	}
 
+	public Pilha<String> empilharProdutosRecentes(){
+		Pilha<String> recentes = new Pilha<>();
+		for (int i=0;i<quantProdutos;i++){
+			if (produtos[i] != null && produtos[i].getDesc() != null) {
+			recentes.empilhar(produtos[i].getDesc());
+			}
+		}
+		return recentes;
+	}
 
 }

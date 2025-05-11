@@ -76,6 +76,28 @@ public class Lista<E> {
 		return (celulaRemovida.getItem());	
 	}
 
+	public void inserirNoFim(E item) {
+    Celula<E> nova = new Celula<>(item);
+    ultimo.setProximo(nova);
+    ultimo = nova;
+	}
+
+
+
+	public int tamanho() {
+    int count = 0;
+    Celula<E> atual = primeiro.getProximo(); // pula a sentinela
+    while (atual != null) {
+        count++;
+        atual = atual.getProximo();
+    }
+    return count;
+	}
+
+	public E getUltimo(){
+		return ultimo.getItem();
+	}
+
 	public double calcularValorMedio(Function<E, Double> extrator, int quantidade) {
     Celula<E> temp = primeiro.getProximo();
     double soma = 0.0;
@@ -103,35 +125,33 @@ public class Lista<E> {
 		double media = soma/quantidade;
 		return media;
 	}
-
 	Lista<E> filtrar(Predicate<E> condicional, int quantidade){
 		Celula<E> temp = primeiro.getProximo();
 		Lista<E> aux = new Lista<>();
-		int count = 0;
-		for(int i=0; i<quantidade && temp!=null ;i++){
-		if(condicional.test(temp.getItem())){
-			aux.inserir(temp.getItem(), count);
-			count++;
+		int encontrados = 0;
+		while (encontrados < quantidade && temp != null) {
+			if (condicional.test(temp.getItem())) {
+				aux.inserirNoFim(temp.getItem());
+				encontrados++;
+			}
+			temp = temp.getProximo();
 		}
-		temp = temp.getProximo();
-		}
-
 		return aux;
 	}
 
 	Lista<E> filtroPorProduto(Predicate<E> condicional){
 		Lista<E> aux = new Lista<>();
 		Celula<E> temp = primeiro.getProximo();
-		int count=0;
-		while(temp!=null){
-			if(condicional.test(temp.getItem())){
-				aux.inserir(temp.getItem(), count);
-				count++;
+		while (temp != null) {
+			if (condicional.test(temp.getItem())) {
+				aux.inserirNoFim(temp.getItem());
 			}
-			temp=temp.getProximo();
+			temp = temp.getProximo();
 		}
 		return aux;
 	}
+
+
 
 	public static void main(String[] args) {
 		Lista<Integer> l = new Lista<>();

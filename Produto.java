@@ -134,6 +134,10 @@ public abstract class Produto {
         }
         return novoProduto;
     }
+    
+    public String getDesc(){
+        return descricao;
+    }
 
     /**
      * Gera uma linha de texto a partir dos dados do produto

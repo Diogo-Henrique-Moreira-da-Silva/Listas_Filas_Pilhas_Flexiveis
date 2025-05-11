@@ -40,11 +40,23 @@ public class Pilha<E> {
 
 	}
 
+	public E consultarFundo(){
+		return fundo.getItem();
+	}
+
 	
 	public Pilha<E> subPilha(int numItens) {
 		
 		Pilha<E> subPilha = new Pilha<>();
         // Implementar sua lógica aqui
 		return subPilha;
+	}
+
+	public void imprimir(){
+		Celula<E> temp = topo;
+		while(temp!=null && temp.getItem()!=null){
+			System.out.println(temp.getItem());
+			temp=temp.getProximo();
+		}	
 	}
 }
